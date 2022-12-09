@@ -107,14 +107,17 @@ internal class RequestInspectorJavaScriptInterface(webView: WebView) {
             repeat(formParameterJsonArray.length()) { i ->
                 val formParameter = formParameterJsonArray.get(i) as JSONObject
                 val name = if(formParameter.has("name")) formParameter.getString("name") else ""
-                val value = if(formParameter.has("value")) formParameter.getString("value") else ""
-                val encodedValue = URLEncoder.encode(value, "UTF-8")
-                if (i != 0) {
-                    resultStringBuilder.append("&")
+                //filter empty name
+                if(name.isNotEmpty()) {
+                    val value = if(formParameter.has("value")) formParameter.getString("value") else ""
+                    val encodedValue = URLEncoder.encode(value, "UTF-8")
+                    if (i != 0 && resultStringBuilder.isNotEmpty()) {
+                        resultStringBuilder.append("&")
+                    }
+                    resultStringBuilder.append(name)
+                    resultStringBuilder.append("=")
+                    resultStringBuilder.append(encodedValue)
                 }
-                resultStringBuilder.append(name)
-                resultStringBuilder.append("=")
-                resultStringBuilder.append(encodedValue)
             }
         } catch (e: Exception) {
             e.printStackTrace()

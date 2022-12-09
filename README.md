@@ -1,4 +1,4 @@
-# Android Request Inspector WebView [![Release](https://jitpack.io/v/acsbendi/Android-Request-Inspector-WebView.svg)](https://jitpack.io/#acsbendi/Android-Request-Inspector-WebView)
+# Android Request Inspector WebView [![Release](https://jitpack.io/v/tqtvjd/Android-Request-Inspector-WebView.svg)](https://jitpack.io/#tqtvjd/Android-Request-Inspector-WebView)
 
 Inspect and intercept full HTTP requests (including all headers, cookies and body) sent from Android WebViews.
 
@@ -22,11 +22,11 @@ allprojects {
 
 ```gradle
 dependencies {
-        implementation 'com.github.acsbendi:Android-Request-Inspector-WebView:1.0.2'
+        implementation 'com.github.tqtvjd:Android-Request-Inspector-WebView:1.0.4'
 }
 ```
 
-Get the latest version on [JitPack](https://jitpack.io/#acsbendi/Android-Request-Inspector-WebView)
+Get the latest version on [![](https://jitpack.io/v/tqtvjd/Android-Request-Inspector-WebView.svg)](https://jitpack.io/#tqtvjd/Android-Request-Inspector-WebView)
 
 Usage
 ===
