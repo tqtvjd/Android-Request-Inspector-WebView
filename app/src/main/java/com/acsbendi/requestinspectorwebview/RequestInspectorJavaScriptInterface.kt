@@ -42,6 +42,9 @@ internal class RequestInspectorJavaScriptInterface(webView: WebView) {
         trace: String,
         enctype: String?
     ) {
+
+        Log.e("formParameterList", formParameterList)
+
         val formParameterJsonArray = JSONArray(formParameterList)
         val headerMap = getHeadersAsMap(headers)
 
@@ -100,17 +103,21 @@ internal class RequestInspectorJavaScriptInterface(webView: WebView) {
 
     private fun getUrlEncodedFormBody(formParameterJsonArray: JSONArray): String {
         val resultStringBuilder = StringBuilder()
-        repeat(formParameterJsonArray.length()) { i ->
-            val formParameter = formParameterJsonArray.get(i) as JSONObject
-            val name = formParameter.getString("name")
-            val value = formParameter.getString("value")
-            val encodedValue = URLEncoder.encode(value, "UTF-8")
-            if (i != 0) {
-                resultStringBuilder.append("&")
+        try {
+            repeat(formParameterJsonArray.length()) { i ->
+                val formParameter = formParameterJsonArray.get(i) as JSONObject
+                val name = if(formParameter.has("name")) formParameter.getString("name") else ""
+                val value = if(formParameter.has("value")) formParameter.getString("value") else ""
+                val encodedValue = URLEncoder.encode(value, "UTF-8")
+                if (i != 0) {
+                    resultStringBuilder.append("&")
+                }
+                resultStringBuilder.append(name)
+                resultStringBuilder.append("=")
+                resultStringBuilder.append(encodedValue)
             }
-            resultStringBuilder.append(name)
-            resultStringBuilder.append("=")
-            resultStringBuilder.append(encodedValue)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
         return resultStringBuilder.toString()
     }
@@ -119,8 +126,8 @@ internal class RequestInspectorJavaScriptInterface(webView: WebView) {
         val resultStringBuilder = StringBuilder()
         repeat(formParameterJsonArray.length()) { i ->
             val formParameter = formParameterJsonArray.get(i) as JSONObject
-            val name = formParameter.getString("name")
-            val value = formParameter.getString("value")
+            val name = if(formParameter.has("name")) formParameter.getString("name") else ""
+            val value = if(formParameter.has("value")) formParameter.getString("value") else ""
             resultStringBuilder.append("--")
             resultStringBuilder.append(MULTIPART_FORM_BOUNDARY)
             resultStringBuilder.append("\n")
@@ -139,8 +146,8 @@ internal class RequestInspectorJavaScriptInterface(webView: WebView) {
         val resultStringBuilder = StringBuilder()
         repeat(formParameterJsonArray.length()) { i ->
             val formParameter = formParameterJsonArray.get(i) as JSONObject
-            val name = formParameter.getString("name")
-            val value = formParameter.getString("value")
+            val name = if(formParameter.has("name")) formParameter.getString("name") else ""
+            val value = if(formParameter.has("value")) formParameter.getString("value") else ""
             if (i != 0) {
                 resultStringBuilder.append("\n")
             }
